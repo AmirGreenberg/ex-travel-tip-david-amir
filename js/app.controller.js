@@ -32,7 +32,7 @@ function onSearch(ev) {
             const lng = loc.geometry.location.lng
             const name = loc.formatted_address
             onAddLoc({ name, lat, lng })
-
+            onPanTo(lat, lng)
             return loc
         })
 }
@@ -84,7 +84,7 @@ function renderLocs(locs) {
         <button class="btn" onclick="onRemoveLoc('${loc.id}')">X</button>
         </div>`
     })
-    
+
     elLocs.innerHTML = strHtmls.join('')
 }
 
@@ -104,11 +104,10 @@ function onGetUserPos() {
         .catch((err) => {})
 }
 
-function onPanTo(lat,lng) {
- 
-    console.log("🚀  lat:", lat)
-    console.log("🚀  lng:", lng)
-    
+function onPanTo(lat, lng) {
+    console.log('🚀  lat:', lat)
+    console.log('🚀  lng:', lng)
+
     mapService.panTo(lat, lng)
 }
 
