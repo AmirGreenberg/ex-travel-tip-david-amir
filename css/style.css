@@ -5,7 +5,11 @@
 
 .loc{
     display: grid;
-    
+    width: 40%;
+    grid-template-columns: 1fr 30px 30px;
+    grid-auto-flow: column;
     margin-bottom: 2px;
+    
+
 
 }
