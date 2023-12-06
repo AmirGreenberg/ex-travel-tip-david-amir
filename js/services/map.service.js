@@ -1,11 +1,25 @@
 export const mapService = {
     initMap,
-    // addMarker,
+    addMarker,
     panTo,
+    getMap
 }
 
 // Var that is used throughout this Module (not global)
 var gMap
+
+function getMap(){
+    return gMap
+}
+
+function addMarker(loc) {
+    var marker = new google.maps.Marker({
+        position: loc,
+        map: gMap,
+        title: 'Hello World!',
+    })
+    return marker
+}
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
     console.log('InitMap')

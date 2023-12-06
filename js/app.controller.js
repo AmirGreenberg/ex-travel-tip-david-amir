@@ -12,7 +12,7 @@ window.onAddLoc = onAddLoc
 
 
 function onInit() {
-    mapService.initMap().then(() => {})
+    mapService.initMap().then(() => { })
 }
 
 function onSearch(ev) {
@@ -42,6 +42,8 @@ function onAddLoc(ev) {
     newLoc.updatedAt = Date.now()
     newLoc.weather = ''
     console.log("🚀  newLoc:", newLoc)
+    onAddMarker({ lat: newLoc.lat, lng: newLoc.lng })
+
 
     locService.save(newLoc).then((savedLoc) => {
         return loadLocs()
@@ -52,8 +54,8 @@ function loadLocs() {
     return locService.query().then((locs) => renderLocs(locs))
 }
 
-function onAddMarker() {
-    mapService.addMarker({ lat: 32.0749831, lng: 34.9120554 })
+function onAddMarker(pos) {
+    mapService.addMarker(pos)
 }
 
 function onGetLocs() {
@@ -73,8 +75,10 @@ function onGetUserPos() {
                 '.user-pos'
             ).innerText = `Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`
         })
-        .catch((err) => {})
+        .catch((err) => { })
 }
+
 function onPanTo() {
     mapService.panTo(35.6895, 139.6917)
 }
+

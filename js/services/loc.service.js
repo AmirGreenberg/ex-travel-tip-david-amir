@@ -10,6 +10,7 @@ export const locService = {
     getEmptyLoc,
     getFilterBy,
     setFilterBy,
+    
 }
 
 const LOC_KEY = 'locDB'
@@ -98,17 +99,19 @@ function _createLocs() {
 function _createDemoLocs() {
     const locs = [
         {
+            id:utilService.makeId(),
             name: 'Greatplace',
-            lat: 32.047104,
             lng: 34.832384,
+            lat: 32.047104,
             createdAt: Date.now(),
             updatedAt: Date.now(),
             weather: '',
         },
         {
+            id:utilService.makeId(),
             name: 'Neveragain',
-            lat: 32.047201,
             lng: 34.832581,
+            lat: 32.047201,
             createdAt: Date.now(),
             updatedAt: Date.now(),
             weather: '',
@@ -119,14 +122,7 @@ function _createDemoLocs() {
     return locs
 }
 
-function addMarker(loc) {
-    var marker = new google.maps.Marker({
-        position: loc,
-        map: gMap,
-        title: 'Hello World!',
-    })
-    return marker
-}
+
 
 // function _createLoc(name, lat, lng) {
 //     const loc = getEmptyLoc()
