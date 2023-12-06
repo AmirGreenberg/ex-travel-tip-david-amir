@@ -80,7 +80,7 @@ function renderLocs(locs) {
         // console.log('🚀  loc:', loc)
         return `<div class="loc">
         <h3 class="locName">${loc.name}</h3>
-        <button class="btn" onclick="onPanTo(${{lat: loc.lat, lng: loc.lng}})">Go</button>
+        <button class="btn" onclick="onPanTo(${loc.lat},${loc.lng})">Go</button>
         <button class="btn" onclick="onRemoveLoc('${loc.id}')">X</button>
         </div>`
     })
@@ -104,14 +104,12 @@ function onGetUserPos() {
         .catch((err) => {})
 }
 
-function onPanTo(loc) {
-    console.log("🚀  loc:", loc)
-    // console.log("🚀  lng:", lng)
-    // console.log("🚀  lat:", lat)
-    console.log("🚀  loc.lat:", loc.lat)
-    console.log("🚀  loc.lng:", loc.lng)
+function onPanTo(lat,lng) {
+ 
+    console.log("🚀  lat:", lat)
+    console.log("🚀  lng:", lng)
     
-    mapService.panTo(loc.lat, loc.lng)
+    mapService.panTo(lat, lng)
 }
 
 function onRemoveLoc(locId) {
