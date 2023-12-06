@@ -4,7 +4,7 @@ export const utilService = {
     makeId,
     randomPastTime,
     randomPetName,
-    randomPetType
+    randomLocType: randomPetType
 }
 
 const gPetNames = ['Bob', 'Charls', 'Chip']

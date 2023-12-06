@@ -1,6 +1,6 @@
 export const mapService = {
     initMap,
-    addMarker,
+    // addMarker,
     panTo,
 }
 
@@ -15,59 +15,23 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
             center: { lat, lng },
             zoom: 15,
         })
-        gMap.addListener('click', onAddPlace)
+        gMap.addListener('click', onAddLoc)
         console.log('Map!', gMap)
     })
 }
 
-function onAddPlace(ev) {
-    const name = prompt('Place name?', 'New Place')
-    if (!name) return
-    const lat = ev.latLng.lat()
-    console.log('🚀  lat:', lat)
-    const lng = ev.latLng.lng()
-    console.log('🚀  lng:', lng)
-    addPlace(name, lat, lng, gMap.getZoom())
-    renderPlaces()
-    // renderMarkers()
-}
-
-function renderPlaces() {
-    const places = getPlaces()
-    const elPlaces = document.querySelector('.places')
-    let strHtmls = places.map((place) => {
-        return `<div class="place">
-        <h3 class="placeName">${place.name}</h3>
-        <button class="btn" onclick="onPanToPlace('${place.id}')">Go</button>
-        <button class="btn" onclick="onRemovePlace('${place.id}')">X</button>
-        </div>`
-    })
-    elPlaces.innerHTML = strHtmls.join('')
-}
-
-function addPlace(name, lat, lng, zoom) {
-    gPlaces.push(_createPlace(name, lat, lng, zoom))
-    saveToStorage(PLACE_KEY, gPlaces)
-}
-
-function _createPlace(name, lat, lng, zoom) {
-    return {
-        id: makeId(),
-        name,
-        lat,
-        lng,
-        zoom,
-    }
-}
-
-function addMarker(loc) {
-    var marker = new google.maps.Marker({
-        position: loc,
-        map: gMap,
-        title: 'Hello World!',
-    })
-    return marker
-}
+// function renderLocs() {
+//     const locs = getLocs()
+//     const elLocs = document.querySelector('.locs')
+//     let strHtmls = locs.map((loc) => {
+//         return `<div class="loc">
+//         <h3 class="locName">${loc.name}</h3>
+//         <button class="btn" onclick="onPanToLoc('${loc.id}')">Go</button>
+//         <button class="btn" onclick="onRemoveLoc('${loc.id}')">X</button>
+//         </div>`
+//     })
+//     elLocs.innerHTML = strHtmls.join('')
+// }
 
 function panTo(lat, lng) {
     var laLatLng = new google.maps.LatLng(lat, lng)
