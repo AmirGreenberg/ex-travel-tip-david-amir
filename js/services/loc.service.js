@@ -50,15 +50,25 @@ function remove(locId) {
 
 function save(loc) {
     if (loc.id) {
+		console.log('into put')
         return storageService.put(LOC_KEY, loc)
     } else {
+		console.log('into post')
         return storageService.post(LOC_KEY, loc)
     }
 }
 
-function getEmptyLoc(id='', name = '', lng = '', lat = '', createdAt = '', updatedAt='',weather = '' ) {
+function getEmptyLoc(
+    id,
+    name = '',
+    lng = '',
+    lat = '',
+    createdAt = '',
+    updatedAt = '',
+    weather = ''
+) {
     return {
-        id,
+        id: '',
         name,
         lng,
         lat,
@@ -88,7 +98,6 @@ function _createLocs() {
 function _createDemoLocs() {
     const locs = [
         {
-            id: utilService.makeId(),
             name: 'Greatplace',
             lat: 32.047104,
             lng: 34.832384,
@@ -97,7 +106,6 @@ function _createDemoLocs() {
             weather: '',
         },
         {
-            id: utilService.makeId(),
             name: 'Neveragain',
             lat: 32.047201,
             lng: 34.832581,
@@ -120,15 +128,14 @@ function addMarker(loc) {
     return marker
 }
 
-	
-	// function _createLoc(name, lat, lng) {
-	//     const loc = getEmptyLoc()
-	//     loc.id = utilService.makeId()
-	//     loc.name = name
-	//     loc.lat = lat
-	//     loc.lng = lng
-	//     loc.createdAt = Date.now()
-	//     loc.updatedAt = Date.now()
-	//     loc.weather = ''
-	//     return loc
-	// }
+// function _createLoc(name, lat, lng) {
+//     const loc = getEmptyLoc()
+//     loc.id = utilService.makeId()
+//     loc.name = name
+//     loc.lat = lat
+//     loc.lng = lng
+//     loc.createdAt = Date.now()
+//     loc.updatedAt = Date.now()
+//     loc.weather = ''
+//     return loc
+// }

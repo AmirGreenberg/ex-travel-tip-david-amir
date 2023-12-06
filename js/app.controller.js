@@ -37,7 +37,6 @@ function onAddLoc(ev) {
     newLoc.name = prompt('Enter name')
     newLoc.lat = ev.latLng.lat()
     newLoc.lng = ev.latLng.lng()
-    newLoc.id = utilService.makeId()
     newLoc.createdAt = Date.now()
     newLoc.updatedAt = Date.now()
     newLoc.weather = ''
