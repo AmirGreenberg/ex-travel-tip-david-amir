@@ -105,6 +105,7 @@ function onGetUserPos() {
 }
 
 function onPanTo(loc) {
+    console.log("🚀  loc:", loc)
     // console.log("🚀  lng:", lng)
     // console.log("🚀  lat:", lat)
     console.log("🚀  loc.lat:", loc.lat)
