@@ -80,7 +80,7 @@ function renderLocs(locs) {
         // console.log('🚀  loc:', loc)
         return `<div class="loc">
         <h3 class="locName">${loc.name}</h3>
-        <button class="btn" onclick="onPanTo('${{lat: loc.lat, lng: loc.lng}}')">Go</button>
+        <button class="btn" onclick="onPanTo(${{lat: loc.lat, lng: loc.lng}})">Go</button>
         <button class="btn" onclick="onRemoveLoc('${loc.id}')">X</button>
         </div>`
     })
