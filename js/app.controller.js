@@ -10,9 +10,9 @@ window.onGetUserPos = onGetUserPos
 window.onSearch = onSearch
 window.onAddLoc = onAddLoc
 
-
 function onInit() {
-    mapService.initMap()
+    mapService
+        .initMap()
         .then(() => {
             console.log('Map is ready')
             onGetLocs()
@@ -25,8 +25,26 @@ function onSearch(ev) {
     const elSearch = ev.target
     const elSearchInput = elSearch.querySelector('input')
     const value = elSearchInput.value
-    // onAddLoc(value)
+    console.log('🚀  value:', value)
+    const API_KEY = 'AIzaSyCkKats8hPTEfFBZWP9TBgW7ElMGbCsmdk'
+    const urlLoc = `https://maps.googleapis.com/maps/api/geocode/json?address=${value}&key=${API_KEY}`
+    console.log('🚀  loc:', urlLoc)
+
+    return fetch(urlLoc)
+        .then((res) => res.json())
+        .then((res) => res.results[0])
+        .then((loc) => {
+            console.log(loc)
+            // onAddMarker(
+            //     { lat: newLoc.lat, lng: newLoc.lng },
+            //     loc.results[0].formatted_address
+            // )
+            return loc
+        })
 }
+
+// const location = {loc: {loc.results[0].geometry.location,} }
+// onAddLoc(value)
 
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
 function getPosition() {
@@ -37,7 +55,7 @@ function getPosition() {
 
 function onAddLoc(ev) {
     const newLoc = locService.getEmptyLoc()
-    console.log("🚀  newLoc:", newLoc)
+    console.log('🚀  newLoc:', newLoc)
     // if (!newLoc.name) return
 
     newLoc.name = prompt('Enter name')
@@ -46,9 +64,8 @@ function onAddLoc(ev) {
     newLoc.createdAt = Date.now()
     newLoc.updatedAt = Date.now()
     newLoc.weather = ''
-    console.log("🚀  newLoc:", newLoc)
+    console.log('🚀  newLoc:', newLoc)
     onAddMarker({ lat: newLoc.lat, lng: newLoc.lng })
-
 
     locService.save(newLoc).then((savedLoc) => {
         return loadLocs()
@@ -56,7 +73,7 @@ function onAddLoc(ev) {
 }
 
 ///check with amir about this function
-// function loadLocs() { 
+// function loadLocs() {
 //     return locService.query().then((locs) => renderLocs(locs))
 // }
 
@@ -95,10 +112,9 @@ function onGetUserPos() {
                 '.user-pos'
             ).innerText = `Latitude: ${pos.coords.latitude} - Longitude: ${pos.coords.longitude}`
         })
-        .catch((err) => { })
+        .catch((err) => {})
 }
 
 function onPanTo() {
     mapService.panTo(35.6895, 139.6917)
 }
-
