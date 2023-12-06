@@ -10,14 +10,11 @@ window.onGetUserPos = onGetUserPos
 window.onSearch = onSearch
 window.onAddLoc = onAddLoc
 window.onRemoveLoc = onRemoveLoc
-window.onPanTo = onPanTo
 
 function onInit() {
-    mapService
-        .initMap()
-        .then(() => {
-            onGetLocs()
-        })
+    mapService.initMap().then(() => {
+        onGetLocs()
+    })
 }
 
 function onSearch(ev) {
@@ -54,23 +51,23 @@ function onAddLoc(input) {
     const newLoc = locService.getEmptyLoc()
     // if (!newLoc.name) return
 
-    newLoc.name = input.name || prompt('Enter name') 
-    newLoc.lat = input.lat ||  input.latLng.lat() 
+    newLoc.name = input.name || prompt('Enter name')
+    newLoc.lat = input.lat || input.latLng.lat()
     newLoc.lng = input.lng || input.latLng.lng()
     newLoc.createdAt = Date.now()
     newLoc.updatedAt = Date.now()
     newLoc.weather = ''
-    onAddMarker({ lat: newLoc.lat, lng: newLoc.lng })
+    onAddMarker(newLoc.name, { lat: newLoc.lat, lng: newLoc.lng })
 
     locService.save(newLoc).then((savedLoc) => {
         return loadLocs()
     })
 }
 
-///check with amir about this function
-// function loadLocs() {
-//     return locService.query().then((locs) => renderLocs(locs))
-// }
+function loadLocs() {
+    console.log('check')
+    return locService.query().then((locs) => renderLocs(locs))
+}
 
 function onAddMarker(name, pos) {
     mapService.addMarker(name, pos)
@@ -80,12 +77,14 @@ function renderLocs(locs) {
     // const locs = getLocs()
     const elLocs = document.querySelector('.locs')
     let strHtmls = locs.map((loc) => {
+        // console.log('🚀  loc:', loc)
         return `<div class="loc">
         <h3 class="locName">${loc.name}</h3>
-        <button class="btn" onclick="onPanToLoc('${loc.lat,loc.lng}')">Go</button>
+        <button class="btn" onclick="onPanTo('${{lat: loc.lat, lng: loc.lng}}')">Go</button>
         <button class="btn" onclick="onRemoveLoc('${loc.id}')">X</button>
         </div>`
     })
+    
     elLocs.innerHTML = strHtmls.join('')
 }
 
@@ -105,15 +104,16 @@ function onGetUserPos() {
         .catch((err) => {})
 }
 
-function onPanTo(lat,lng) {
-    mapService.panTo(lat, lng)
-}
-
-function onRemoveLoc(locId){
-    console.log('locId', locId)
-    locService.remove(locId)
-    .then(() => loadLocs())
+function onPanTo(loc) {
+    // console.log("🚀  lng:", lng)
+    // console.log("🚀  lat:", lat)
+    console.log("🚀  loc.lat:", loc.lat)
+    console.log("🚀  loc.lng:", loc.lng)
     
-
+    mapService.panTo(loc.lat, loc.lng)
 }
 
+function onRemoveLoc(locId) {
+    console.log('locId', locId)
+    locService.remove(locId).then(() => loadLocs())
+}
