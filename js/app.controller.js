@@ -10,6 +10,7 @@ window.onGetUserPos = onGetUserPos
 window.onSearch = onSearch
 window.onAddLoc = onAddLoc
 
+
 function onInit() {
     mapService.initMap().then(() => {})
 }
