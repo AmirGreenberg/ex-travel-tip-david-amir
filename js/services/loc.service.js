@@ -19,7 +19,7 @@ _createLocs()
 function getLocs() {
     return new Promise((resolve, reject) => {
         setTimeout(() => {
-            resolve(locs)
+            resolve(query())
         }, 2000)
     })
 }
@@ -27,6 +27,7 @@ function getLocs() {
 //////////////////////////////////////////////////////////
 
 var gFilterBy = { txt: '', minScore: 0 }
+
 
 function query() {
     return storageService.query(LOC_KEY).then((locs) => {

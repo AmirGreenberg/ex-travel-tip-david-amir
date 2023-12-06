@@ -12,7 +12,12 @@ window.onAddLoc = onAddLoc
 
 
 function onInit() {
-    mapService.initMap().then(() => { })
+    mapService.initMap()
+        .then(() => {
+            console.log('Map is ready')
+            onGetLocs()
+        })
+        .catch(() => console.log('Error: cannot init map'))
 }
 
 function onSearch(ev) {
@@ -50,21 +55,36 @@ function onAddLoc(ev) {
     })
 }
 
-function loadLocs() {
-    return locService.query().then((locs) => renderLocs(locs))
-}
+///check with amir about this function
+// function loadLocs() { 
+//     return locService.query().then((locs) => renderLocs(locs))
+// }
 
 function onAddMarker(pos) {
     mapService.addMarker(pos)
 }
 
+function renderLocs(locs) {
+    // const locs = getLocs()
+    const elLocs = document.querySelector('.locs')
+    let strHtmls = locs.map((loc) => {
+        return `<div class="loc">
+        <h3 class="locName">${loc.name}</h3>
+        <button class="btn" onclick="onPanToLoc('${loc.id}')">Go</button>
+        <button class="btn" onclick="onRemoveLoc('${loc.id}')">X</button>
+        </div>`
+    })
+    elLocs.innerHTML = strHtmls.join('')
+}
+
 function onGetLocs() {
     locService.getLocs().then((locs) => {
-        document.querySelector('.locs').innerText = JSON.stringify(
-            locs,
-            null,
-            2
-        )
+        renderLocs(locs)
+        // document.querySelector('.locs').innerText = JSON.stringify(
+        //     locs,
+        //     null,
+        //     2
+        // )
     })
 }
 

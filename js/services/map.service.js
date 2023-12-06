@@ -34,18 +34,7 @@ function initMap(lat = 32.0749831, lng = 34.9120554) {
     })
 }
 
-// function renderLocs() {
-//     const locs = getLocs()
-//     const elLocs = document.querySelector('.locs')
-//     let strHtmls = locs.map((loc) => {
-//         return `<div class="loc">
-//         <h3 class="locName">${loc.name}</h3>
-//         <button class="btn" onclick="onPanToLoc('${loc.id}')">Go</button>
-//         <button class="btn" onclick="onRemoveLoc('${loc.id}')">X</button>
-//         </div>`
-//     })
-//     elLocs.innerHTML = strHtmls.join('')
-// }
+
 
 function panTo(lat, lng) {
     var laLatLng = new google.maps.LatLng(lat, lng)
