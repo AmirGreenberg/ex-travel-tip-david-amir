@@ -81,11 +81,6 @@ function renderLocs(locs) {
 function onGetLocs() {
     locService.getLocs().then((locs) => {
         renderLocs(locs)
-        // document.querySelector('.locs').innerText = JSON.stringify(
-        //     locs,
-        //     null,
-        //     2
-        // )
     })
 }
 
@@ -106,7 +101,7 @@ function onPanTo() {
 function onRemoveLoc(locId){
     console.log('locId', locId)
     locService.remove(locId)
-    loadLocs()
+    .then(() => loadLocs())
     
 
 }
