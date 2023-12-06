@@ -10,16 +10,14 @@ window.onGetUserPos = onGetUserPos
 window.onSearch = onSearch
 window.onAddLoc = onAddLoc
 window.onRemoveLoc = onRemoveLoc
-
+window.onPanTo = onPanTo
 
 function onInit() {
     mapService
         .initMap()
         .then(() => {
-            console.log('Map is ready')
             onGetLocs()
         })
-        .catch(() => console.log('Error: cannot init map'))
 }
 
 function onSearch(ev) {
@@ -27,20 +25,17 @@ function onSearch(ev) {
     const elSearch = ev.target
     const elSearchInput = elSearch.querySelector('input')
     const value = elSearchInput.value
-    console.log('🚀  value:', value)
     const API_KEY = 'AIzaSyCkKats8hPTEfFBZWP9TBgW7ElMGbCsmdk'
     const urlLoc = `https://maps.googleapis.com/maps/api/geocode/json?address=${value}&key=${API_KEY}`
-    console.log('🚀  loc:', urlLoc)
-
     return fetch(urlLoc)
         .then((res) => res.json())
         .then((res) => res.results[0])
         .then((loc) => {
-            console.log(loc)
-            // onAddMarker(
-            //     { lat: newLoc.lat, lng: newLoc.lng },
-            //     loc.results[0].formatted_address
-            // )
+            const lat = loc.geometry.location.lat
+            const lng = loc.geometry.location.lng
+            const name = loc.formatted_address
+            onAddLoc({ name, lat, lng })
+
             return loc
         })
 }
@@ -55,20 +50,17 @@ function getPosition() {
     })
 }
 
-function onAddLoc(ev) {
+function onAddLoc(input) {
     const newLoc = locService.getEmptyLoc()
-    console.log('🚀  newLoc:', newLoc)
     // if (!newLoc.name) return
 
-    newLoc.name = prompt('Enter name')
-    newLoc.lat = ev.latLng.lat()
-    newLoc.lng = ev.latLng.lng()
+    newLoc.name = input.name || prompt('Enter name') 
+    newLoc.lat = input.lat ||  input.latLng.lat() 
+    newLoc.lng = input.lng || input.latLng.lng()
     newLoc.createdAt = Date.now()
     newLoc.updatedAt = Date.now()
     newLoc.weather = ''
-    console.log("🚀  newLoc:", newLoc)
     onAddMarker({ lat: newLoc.lat, lng: newLoc.lng })
-
 
     locService.save(newLoc).then((savedLoc) => {
         return loadLocs()
@@ -76,7 +68,7 @@ function onAddLoc(ev) {
 }
 
 ///check with amir about this function
-// function loadLocs() { 
+// function loadLocs() {
 //     return locService.query().then((locs) => renderLocs(locs))
 // }
 
@@ -90,7 +82,7 @@ function renderLocs(locs) {
     let strHtmls = locs.map((loc) => {
         return `<div class="loc">
         <h3 class="locName">${loc.name}</h3>
-        <button class="btn" onclick="onPanToLoc('${loc.id}')">Go</button>
+        <button class="btn" onclick="onPanToLoc('${loc.lat,loc.lng}')">Go</button>
         <button class="btn" onclick="onRemoveLoc('${loc.id}')">X</button>
         </div>`
     })
@@ -113,8 +105,8 @@ function onGetUserPos() {
         .catch((err) => {})
 }
 
-function onPanTo() {
-    mapService.panTo(35.6895, 139.6917)
+function onPanTo(lat,lng) {
+    mapService.panTo(lat, lng)
 }
 
 function onRemoveLoc(locId){
