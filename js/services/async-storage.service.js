@@ -50,6 +50,7 @@ function put(entityType, updatedEntity) {
 }
 
 function remove(entityType, entityId) {
+    console.log('inremove')
     return query(entityType).then((entities) => {
         const idx = entities.findIndex((entity) => entity.id === entityId)
         if (idx < 0)

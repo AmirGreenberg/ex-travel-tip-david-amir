@@ -12,11 +12,11 @@ function getMap(){
     return gMap
 }
 
-function addMarker(loc) {
+function addMarker(name,loc) {
     var marker = new google.maps.Marker({
         position: loc,
         map: gMap,
-        title: 'Hello World!',
+        title: name,
     })
     return marker
 }

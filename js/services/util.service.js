@@ -3,12 +3,8 @@ export const utilService = {
     loadFromStorage,
     makeId,
     randomPastTime,
-    randomPetName,
-    randomLocType: randomPetType
 }
 
-const gPetNames = ['Bob', 'Charls', 'Chip']
-const gPetTypes = ['cat', 'dog', 'bird', 'fish', 'rabbit']
 
 function saveToStorage(key, value) {
     localStorage.setItem(key, JSON.stringify(value))
@@ -32,14 +28,6 @@ function getRandomIntInclusive(min, max) {
     min = Math.ceil(min)
     max = Math.floor(max)
     return Math.floor(Math.random() * (max - min + 1) + min)
-}
-
-function randomPetName() {
-    return gPetNames[parseInt(Math.random() * gPetNames.length)]
-}
-
-function randomPetType() {
-    return gPetTypes[parseInt(Math.random() * gPetTypes.length)]
 }
 
 function randomPastTime() {

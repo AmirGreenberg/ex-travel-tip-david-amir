@@ -52,10 +52,8 @@ function remove(locId) {
 
 function save(loc) {
     if (loc.id) {
-		console.log('into put')
         return storageService.put(LOC_KEY, loc)
     } else {
-		console.log('into post')
         return storageService.post(LOC_KEY, loc)
     }
 }

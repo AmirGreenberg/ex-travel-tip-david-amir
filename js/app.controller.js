@@ -9,6 +9,8 @@ window.onGetLocs = onGetLocs
 window.onGetUserPos = onGetUserPos
 window.onSearch = onSearch
 window.onAddLoc = onAddLoc
+window.onRemoveLoc = onRemoveLoc
+
 
 function onInit() {
     mapService
@@ -64,8 +66,9 @@ function onAddLoc(ev) {
     newLoc.createdAt = Date.now()
     newLoc.updatedAt = Date.now()
     newLoc.weather = ''
-    console.log('🚀  newLoc:', newLoc)
+    console.log("🚀  newLoc:", newLoc)
     onAddMarker({ lat: newLoc.lat, lng: newLoc.lng })
+
 
     locService.save(newLoc).then((savedLoc) => {
         return loadLocs()
@@ -73,12 +76,12 @@ function onAddLoc(ev) {
 }
 
 ///check with amir about this function
-// function loadLocs() {
+// function loadLocs() { 
 //     return locService.query().then((locs) => renderLocs(locs))
 // }
 
-function onAddMarker(pos) {
-    mapService.addMarker(pos)
+function onAddMarker(name, pos) {
+    mapService.addMarker(name, pos)
 }
 
 function renderLocs(locs) {
@@ -118,3 +121,4 @@ function onGetUserPos() {
 function onPanTo() {
     mapService.panTo(35.6895, 139.6917)
 }
+
